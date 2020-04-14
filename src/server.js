@@ -1,7 +1,7 @@
 const express = require('express');
 const exphds = require('express-handlebars');
 const path = require('path');
-
+const morgan = require('morgan');
 //initializations
 const app = express();
 
@@ -18,6 +18,7 @@ app.engine('.hbs', exphds({                                //Motor de plantillas
 app.set('view engine', '.hbs');
 
 //middlewares
+app.use(morgan('dev'));
 app.use(express.urlencoded({extended: false}));            //Leer formatos tipo JSON
 
 //Global variables

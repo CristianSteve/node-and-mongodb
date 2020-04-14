@@ -1,10 +1,12 @@
+//Rutas del endpoint  notes
 const notesCtrll = {};
 
 notesCtrll.renderNoteForm = (req, res) =>{
-    res.send('render note');
+    res.render('notes/newNote');
 };
 
 notesCtrll.createNewNote = (req, res) =>{
+    console.table(req.body);
     res.send('add new note');
 };
 

@@ -19,7 +19,7 @@ const userSchema = new Schema({
 //   .encrypPassword : Nombre del metodo
 // --bcryptjs: Modulo para encriptar
 userSchema.methods.encrypPassword = async password => {
-    const salt = await bcrypt.genSalt(10);
+    const salt = await bcrypt.genSalt(10);                       //await: Asincrono, debe agregar async para que funcione le metodo
     return await bcrypt.hash(password, salt);
 }
 

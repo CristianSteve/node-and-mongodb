@@ -1,3 +1,4 @@
+//Rutas del menu principal
 const indexCtrll = {};
 
 indexCtrll.renderIndex = (req, res) =>{
