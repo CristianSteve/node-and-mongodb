@@ -1,17 +1,21 @@
 //Rutas del endpoint  notes
 const notesCtrll = {};
+const Note = require('../models/Note');                    //Accede al modelo de datos de Notes
 
 notesCtrll.renderNoteForm = (req, res) =>{
     res.render('notes/newNote');
 };
 
-notesCtrll.createNewNote = (req, res) =>{
-    console.table(req.body);
+notesCtrll.createNewNote = async (req, res) =>{
+    const { title, description } = req.body;               //Guarda el cuerpo del request
+    const newNote = new Note({title, description});        //Crea un nuevo objeto del tipo de modelo Notes
+    await newNote.save();                                  //Guardar manera asincrona
     res.send('add new note');
 };
 
-notesCtrll.renderNotes = (req, res) =>{
-    res.send('renders notes');
+notesCtrll.renderNotes = async (req, res) =>{
+    const notes = await Note.find().lean();
+    res.render('notes/allNotes', {notes});
 };
 
 notesCtrll.renderEditForm = (req, res) =>{

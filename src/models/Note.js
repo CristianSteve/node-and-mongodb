@@ -1,5 +1,5 @@
 //Modelamiento de base de datos
-const {Schema, model} = require('moongose');
+const {Schema, model} = require('mongoose');
 
 //Esctrutura
 const noteSchema = new Schema({
