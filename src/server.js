@@ -24,6 +24,7 @@ app.use(express.urlencoded({extended: false}));            //Leer formatos tipo 
 
 //Routes
 app.use(require('./routes/index.routes'));
+app.use(require('./routes/notes.routes'));
 
 //static files
 app.use(express.static(path.join(__dirname, 'public')));   //Definir la ruta publica del proyecto
