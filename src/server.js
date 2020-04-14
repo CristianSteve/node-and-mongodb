@@ -23,9 +23,7 @@ app.use(express.urlencoded({extended: false}));            //Leer formatos tipo 
 //Global variables
 
 //Routes
-app.get('/', (req, res) =>{
-    res.render('index');
-});
+app.use(require('./routes/index.routes'));
 
 //static files
 app.use(express.static(path.join(__dirname, 'public')));   //Definir la ruta publica del proyecto
