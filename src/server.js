@@ -2,6 +2,9 @@ const express = require('express');
 const exphds = require('express-handlebars');
 const path = require('path');
 const morgan = require('morgan');
+const methodOverride = require('method-override');         //Metodos DELETE..ETC
+
+
 //initializations
 const app = express();
 
@@ -18,8 +21,9 @@ app.engine('.hbs', exphds({                                //Motor de plantillas
 app.set('view engine', '.hbs');
 
 //middlewares
-app.use(morgan('dev'));
+app.use(morgan('dev'));                                    //Ver las peticiones al servidor
 app.use(express.urlencoded({extended: false}));            //Leer formatos tipo JSON
+app.use(methodOverride('_method'));                        //Adicionar metodos para formularios vista
 
 //Global variables
 

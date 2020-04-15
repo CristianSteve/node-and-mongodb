@@ -10,7 +10,7 @@ notesCtrll.createNewNote = async (req, res) =>{
     const { title, description } = req.body;               //Guarda el cuerpo del request
     const newNote = new Note({title, description});        //Crea un nuevo objeto del tipo de modelo Notes
     await newNote.save();                                  //Guardar manera asincrona
-    res.send('add new note');
+    res.redirect('/notes');
 };
 
 notesCtrll.renderNotes = async (req, res) =>{
@@ -26,8 +26,9 @@ notesCtrll.updateNotes = (req, res) =>{
     res.send('edit notes');
 };
 
-notesCtrll.deleteNotes = (req, res) =>{
-    res.send('delete notes');
+notesCtrll.deleteNotes = async (req, res) =>{
+    await Note.findByIdAndDelete(req.params.id); 
+    res.redirect('/notes');
 };
 
 module.exports = notesCtrll;
