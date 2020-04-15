@@ -10,6 +10,7 @@ notesCtrll.createNewNote = async (req, res) =>{
     const { title, description } = req.body;               //Guarda el cuerpo del request
     const newNote = new Note({title, description});        //Crea un nuevo objeto del tipo de modelo Notes
     await newNote.save();                                  //Guardar manera asincrona
+    req.flash('success_msg','Note add Succesfully');       //Envia notificacion vista
     res.redirect('/notes');
 };
 
@@ -24,14 +25,15 @@ notesCtrll.renderEditForm = async (req, res) =>{
 };
 
 notesCtrll.updateNotes = async (req, res) =>{
-    //console.log(req.body, req.params.id);
     const { title, description } = req.body;
     await Note.findByIdAndUpdate(req.params.id, { title, description }); 
+    req.flash('success_msg','Note update Succesfully');       
     res.redirect('/notes');
 };
 
 notesCtrll.deleteNotes = async (req, res) =>{
     await Note.findByIdAndDelete(req.params.id); 
+    req.flash('success_msg','Note delete Succesfully');    
     res.redirect('/notes');
 };
 

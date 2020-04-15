@@ -3,6 +3,8 @@ const exphds = require('express-handlebars');
 const path = require('path');
 const morgan = require('morgan');
 const methodOverride = require('method-override');         //Metodos DELETE..ETC
+const flash = require('connect-flash');                    //Modulos de envio de mensajes vistas
+const session = require('express-session');                //Modulos de envio de mensajes vistas
 
 
 //initializations
@@ -24,8 +26,16 @@ app.set('view engine', '.hbs');
 app.use(morgan('dev'));                                    //Ver las peticiones al servidor
 app.use(express.urlencoded({extended: false}));            //Leer formatos tipo JSON
 app.use(methodOverride('_method'));                        //Adicionar metodos para formularios vista
+app.use(session({ secret: 'secret',                       //Usar mensajes de notificacion
+                  resave: true,
+                  saveUninitialized: true }));
+app.use(flash());
 
 //Global variables
+app.use((req, res, next) => {
+    res.locals.success_msg = req.flash('success_msg');
+    next();
+});
 
 //Routes
 app.use(require('./routes/index.routes'));

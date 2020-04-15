@@ -8,14 +8,13 @@
                         {{title}} <a href="/notes/edit/{{_id}}"><i class="fa fa-pencil"></i></a>
                     </h4>
                     <p>{{description}}</p>
-                    <form action="/notes/delete/{{_id}}?_method=DELETE" method="POST">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="btn btn-danger btn-block btn-sm">
-                            Delete
-                        </button>
-                    </form>
+                    <button type="submit" class="btn btn-danger btn-block btn-sm" data-toggle="modal" data-target="#s{{_id}}">
+                        Delete
+                    </button>
                 </div>
             </div>
         </div>
+        {{>backdrop}}
     {{/each}}
+    
 </div>
