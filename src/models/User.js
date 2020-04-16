@@ -1,5 +1,5 @@
 //Modelamiento de base de datos
-const {Schema, model } = require('moongose');
+const {Schema, model } = require('mongoose');
 
 //Modulo de encriptacion
 const bcrypt = require('bcryptjs');
