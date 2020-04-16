@@ -14,12 +14,12 @@ notesCtrll.createNewNote = async (req, res) =>{
     res.redirect('/notes');
 };
 
-notesCtrll.renderNotes = async (req, res) =>{
-    const notes = await Note.find().lean();
-    res.render('notes/allNotes', {notes});
+notesCtrll.renderNotes = async (req, res) =>{              //Busca todas las notas de la BD
+    const notes = await Note.find().lean();                //Transforma objeto JSON legible 
+    res.render('notes/allNotes', {notes});                 //Pasa Objeto a la vista
 };
 
-notesCtrll.renderEditForm = async (req, res) =>{
+notesCtrll.renderEditForm = async (req, res) =>{           //Formulario para editar notas
     const note = await Note.findById(req.params.id).lean();
     res.render('notes/editNotes', {note});
 };

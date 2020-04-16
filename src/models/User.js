@@ -1,5 +1,5 @@
 //Modelamiento de base de datos
-const {Schema, model } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 //Modulo de encriptacion
 const bcrypt = require('bcryptjs');
@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs');
 //Esctrutura
 const userSchema = new Schema({
     name : { type : String, required : true },
-    email : { type : String, required : true },
+    email : { type : String, required : true, unique: true},
     password : { type : String, required : true }
 },{
     timestamps : true

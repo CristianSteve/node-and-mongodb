@@ -5,10 +5,12 @@ const morgan = require('morgan');
 const methodOverride = require('method-override');         //Metodos DELETE..ETC
 const flash = require('connect-flash');                    //Modulos de envio de mensajes vistas
 const session = require('express-session');                //Modulos de envio de mensajes vistas
+const passport = require('passport');                      //Verificacion de sesiones
 
 
 //initializations
 const app = express();
+require('./config/passport');                              //Modulo creado para verificar sesiones
 
 //settings
 app.set('port',process.env.PORT || 3000);                  //Definir ruta del puerto servidor
@@ -26,14 +28,19 @@ app.set('view engine', '.hbs');
 app.use(morgan('dev'));                                    //Ver las peticiones al servidor
 app.use(express.urlencoded({extended: false}));            //Leer formatos tipo JSON
 app.use(methodOverride('_method'));                        //Adicionar metodos para formularios vista
-app.use(session({ secret: 'secret',                       //Usar mensajes de notificacion
+app.use(session({ secret: 'secret',                        //Usar mensajes de notificacion
                   resave: true,
-                  saveUninitialized: true }));
+                  saveUninitialized: true 
+                }));
+app.use(passport.initialize());                            //inicializa el modulo [Tiene que estar despues de la session]
+app.use(passport.session());                               //utiliza las sesiones 
 app.use(flash());
 
 //Global variables
 app.use((req, res, next) => {
     res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+    res.locals.error = req.flash('error');
     next();
 });
 

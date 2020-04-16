@@ -1,5 +1,5 @@
 //Modelamiento de base de datos
-const {Schema, model} = require('mongoose');
+const {Schema, model} = require('mongoose');                 //Driver de MONGOOSE
 
 //Esctrutura
 const noteSchema = new Schema({
