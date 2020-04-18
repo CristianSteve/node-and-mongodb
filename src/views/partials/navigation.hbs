@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#">Hello USER</a>
+        <a class="navbar-brand" href="/">Welcome {{nameUsr}}</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -15,12 +15,7 @@
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/users/signup">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/users/signin">Login</a>
-                </li>
+                {{#if user}}
                 <li class="nav-item">
                     <div class="btn-group">
                         <button type="button" class="btn dropdown-toggle nav-link" data-toggle="dropdown"
@@ -32,10 +27,18 @@
                             <a class="dropdown-item" href="/notes/add">Add Notes</a>
                             <a class="dropdown-item" href="/notes/find">Find Notes</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Logout</a>
+                            <a class="dropdown-item" href="/users/logout">Logout</a>
                         </div>
                     </div>
                 </li>
+                {{else}}
+                <li class="nav-item">
+                    <a class="nav-link" href="/users/signup">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/users/signin">Login</a>
+                </li> 
+                {{/if}}
             </ul>
         </div>
     </div>

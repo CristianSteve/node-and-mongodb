@@ -11,7 +11,7 @@ passport.use(new localStrategy({
     if(!user){
         return done(null, false, {message : 'no user find'});
     }else{
-        const match = user.matchPassword(password);
+        const match = await user.matchPassword(password);
         if(match)
             return done(null, user);
         else   
@@ -23,6 +23,8 @@ passport.serializeUser((user, done)=>{
     done(null, user.id);
 })
 
-passport.serializeUser((id, done)=>{
-    done(err, user);
+passport.deserializeUser((id, done)=>{
+    Users.findById(id, (err, user)=>{
+        done(err, user);
+    })
 })

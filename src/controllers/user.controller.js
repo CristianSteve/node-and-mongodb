@@ -21,7 +21,7 @@ userCtrll.signUp = async (req, res) =>{                                 //Formul
     }else{
         const emailUser = await Users.findOne({email: email});
         if(emailUser){
-            req.flash('error_msg','The email is already in use.')
+            req.flash('error','The email is already in use.')
             res.redirect('/users/signup');
         }else{
             const newUser = new Users({name, email, password});
@@ -44,7 +44,9 @@ userCtrll.signIn = passport.authenticate('local', {
 })
 
 userCtrll.logOut = (req, res) =>{
-    res.send('logout');
+    req.logOut();
+    req.flash('success_msg', 'Session terminated');
+    res.redirect('/users/signin');
 };
  
 module.exports = userCtrll;

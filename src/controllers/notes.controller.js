@@ -9,14 +9,16 @@ notesCtrll.renderNoteForm = (req, res) =>{
 notesCtrll.createNewNote = async (req, res) =>{
     const { title, description } = req.body;               //Guarda el cuerpo del request
     const newNote = new Note({title, description});        //Crea un nuevo objeto del tipo de modelo Notes
+    newNote.user = req.user.id;                            //Guardar ID del usuario
     await newNote.save();                                  //Guardar manera asincrona
     req.flash('success_msg','Note add Succesfully');       //Envia notificacion vista
     res.redirect('/notes');
 };
 
 notesCtrll.renderNotes = async (req, res) =>{              //Busca todas las notas de la BD
-    const notes = await Note.find().lean();                //Transforma objeto JSON legible 
-    res.render('notes/allNotes', {notes});                 //Pasa Objeto a la vista
+    const notes = await Note.find({user: req.user.id}).lean();                //Transforma objeto JSON legible 
+    const nameUsr = req.user.name;
+    res.render('notes/allNotes', {notes, nameUsr});                 //Pasa Objeto a la vista
 };
 
 notesCtrll.renderEditForm = async (req, res) =>{           //Formulario para editar notas

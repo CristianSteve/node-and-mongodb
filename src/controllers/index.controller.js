@@ -2,7 +2,9 @@
 const indexCtrll = {};
 
 indexCtrll.renderIndex = (req, res) =>{
-    res.render('index');
+    let nameUsr = {};
+    nameUsr = req.user ? nameUsr.name : null;
+    res.render('index',{nameUsr});
 };
 
 indexCtrll.renderAbout = (req, res) =>{

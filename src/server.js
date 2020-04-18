@@ -34,13 +34,14 @@ app.use(session({ secret: 'secret',                        //Usar mensajes de no
                 }));
 app.use(passport.initialize());                            //inicializa el modulo [Tiene que estar despues de la session]
 app.use(passport.session());                               //utiliza las sesiones 
-app.use(flash());
+app.use(flash());                                          //Envio de mensajes
 
 //Global variables
 app.use((req, res, next) => {
     res.locals.success_msg = req.flash('success_msg');
     res.locals.error_msg = req.flash('error_msg');
-    res.locals.error = req.flash('error');
+    res.locals.error = req.flash('error');                 //Mensajes para la vista -> errors.hbs
+    res.locals.user = req.user || null;                    //Guarda credencial de session del usuario
     next();
 });
 
