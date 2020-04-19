@@ -3,8 +3,8 @@ const router = Router();
 
 
 const { 
-        renderNoteForm, createNewNote, renderNotes,
-        renderEditForm, updateNotes, deleteNotes 
+        renderNoteForm, createNewNote, renderNotes, renderFindForm,
+        renderEditForm, updateNotes, deleteNotes, findNotes 
       } = require('../controllers/notes.controller.js');             //Rutas de los controladores
 
 const { isAuthenticated } = require('../helpers/auth');              //Metodo para poteger las rutas buscando la session
@@ -14,7 +14,10 @@ router.post('/notes/add', isAuthenticated, createNewNote);           //Create No
 router.get('/notes', isAuthenticated, renderNotes);                  //Get list notes
 router.get('/notes/edit/:id', isAuthenticated, renderEditForm);      //Form edit notes
 router.put('/notes/edit/:id', isAuthenticated, updateNotes);         //Update notes
-router.delete('/notes/delete/:id', isAuthenticated, deleteNotes);    //Update notes
+router.delete('/notes/delete/:id', isAuthenticated, deleteNotes);    //Delete notes
+router.get('/notes/find', isAuthenticated, renderFindForm);          //Form Find notes
+router.get('/notes/find/notes', isAuthenticated, findNotes);         //Find notes
+
 
 
 

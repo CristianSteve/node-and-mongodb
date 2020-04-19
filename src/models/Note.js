@@ -14,6 +14,13 @@ const noteSchema = new Schema({
     user : {
         type : String,
         required: true
+    },
+    state : {
+        type : String,
+        required : true
+    },
+    share : {
+        type : Array
     }
 },{
     timestamps : true

@@ -1,13 +1,22 @@
 <h1>Notes</h1>
 <div class="row">
     {{#each notes}}
-        <div class="col-md-3">
-            <div class="card">
+        <div class="col-md-3 p-2">
+            {{#if share}}
+            <div class="card text-white bg-success">
+            {{else}}
+            <div class="card text-white bg-secondary">
+            {{/if}}
                 <div class="card-header">
-                    <h4 class="card-title d-flex justify-content-between align-items-center">
+                    <h4 class="d-flex justify-content-between align-items-center">
                         {{title}} <a href="/notes/edit/{{_id}}"><i class="fa fa-pencil"></i></a>
                     </h4>
-                    <p>{{description}}</p>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{description}}</p>
+                    <button type="submit" class="btn btn-primary btn-block btn-sm" data-toggle="modal" data-target="#s{{_id}}">
+                        Terminado
+                    </button>
                     <button type="submit" class="btn btn-danger btn-block btn-sm" data-toggle="modal" data-target="#s{{_id}}">
                         Delete
                     </button>

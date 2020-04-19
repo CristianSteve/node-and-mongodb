@@ -7,8 +7,9 @@ notesCtrll.renderNoteForm = (req, res) =>{
 };
 
 notesCtrll.createNewNote = async (req, res) =>{
-    const { title, description } = req.body;               //Guarda el cuerpo del request
-    const newNote = new Note({title, description});        //Crea un nuevo objeto del tipo de modelo Notes
+    const { title, description, share } = req.body;               //Guarda el cuerpo del request
+    const newNote = new Note({title, description, state : '1'});  //Crea un nuevo objeto del tipo de modelo Notes
+    if(share) newNote.share.push(share);
     newNote.user = req.user.id;                            //Guardar ID del usuario
     await newNote.save();                                  //Guardar manera asincrona
     req.flash('success_msg','Note add Succesfully');       //Envia notificacion vista
@@ -16,9 +17,15 @@ notesCtrll.createNewNote = async (req, res) =>{
 };
 
 notesCtrll.renderNotes = async (req, res) =>{              //Busca todas las notas de la BD
-    const notes = await Note.find({user: req.user.id}).lean();                //Transforma objeto JSON legible 
-    const nameUsr = req.user.name;
-    res.render('notes/allNotes', {notes, nameUsr});                 //Pasa Objeto a la vista
+    const notes = await Note.find(
+        {$or: 
+            [
+             {user: req.user.id},
+             {share : req.user.email}
+            ]
+    }).lean();                                             //Transforma objeto JSON legible 
+    const nameUsr = req.user.name;                         //Pasa nombre usuario a vista
+    res.render('notes/allNotes', {notes, nameUsr});        //Pasa Objeto a la vista
 };
 
 notesCtrll.renderEditForm = async (req, res) =>{           //Formulario para editar notas
@@ -38,5 +45,21 @@ notesCtrll.deleteNotes = async (req, res) =>{
     req.flash('success_msg','Note delete Succesfully');    
     res.redirect('/notes');
 };
+
+notesCtrll.renderFindForm = async (req, res) =>{                   //Formulario para buscar notas
+    res.render('notes/findNotes');
+};
+
+notesCtrll.findNotes = async (req, res) =>{
+    const { title } = req.query;    
+    const notes = await Note.find({
+        $and : [
+            {user: req.user.id},
+            {title : title}
+        ]}).lean(); 
+    req.flash('success_msg','Note delete Succesfully');    
+    res.render('notes/allNotes', {notes});                        //Pasa Objeto a la vista
+};
+
 
 module.exports = notesCtrll;
