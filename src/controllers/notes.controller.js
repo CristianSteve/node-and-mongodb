@@ -46,19 +46,34 @@ notesCtrll.deleteNotes = async (req, res) =>{
     res.redirect('/notes');
 };
 
-notesCtrll.renderFindForm = async (req, res) =>{                   //Formulario para buscar notas
+notesCtrll.renderFindForm = async (req, res) =>{           //Formulario para buscar notas
     res.render('notes/findNotes');
 };
 
 notesCtrll.findNotes = async (req, res) =>{
     const { title } = req.query;    
     const notes = await Note.find({
-        $and : [
-            {user: req.user.id},
-            {title : title}
-        ]}).lean(); 
-    req.flash('success_msg','Note delete Succesfully');    
-    res.render('notes/allNotes', {notes});                        //Pasa Objeto a la vista
+        $or : [
+            { $and : 
+              [
+                {user : req.user.id},
+                {title : title}
+              ]
+            },{
+              $and : 
+                [
+                  {title : title},
+                  {share : req.user.email}
+                ]
+              }
+            ]
+    }).lean();   
+    if(notes.length > 0){
+      res.render('notes/allNotes', {notes});                 //Pasa Objeto a la vista
+    }else{
+      req.flash('error','no find note');  
+      res.redirect('/notes/find');
+    }
 };
 
 
